@@ -1,6 +1,6 @@
 {
-    "name": "mcs",
-    "short_name": "mcs",
+    "name": "mcs_flutter",
+    "short_name": "mcs_flutter",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
