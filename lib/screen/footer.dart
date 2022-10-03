@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:multi_cloudv3/api/setting_api.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../api/sosmed_api.dart';
+
 class Footer extends StatelessWidget {
-  const Footer({Key? key, required this.content1, required this.content2})
+  Footer({Key? key, required this.content1, required this.content2})
       : super(key: key);
   final Widget content1;
   final Widget content2;
+  String ln = '';
+  String tw = '';
+  String ig = '';
+  String yt = '';
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +43,20 @@ class Footer extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            width: screenSize.width * 0.12,
+                            width: screenSize.width * 0.10,
+                            height: screenSize.height * 0.1,
+                            decoration: const BoxDecoration(
+                                //color: Colors.lightBlueAccent,
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/logo/multicloudsolution.jpg'),
+                                    fit: BoxFit.fill)),
+                          ),
+                          const Spacer(
+                            flex: 8,
+                          ),
+                          Container(
+                            width: screenSize.width * 0.10,
                             height: screenSize.height * 0.08,
                             decoration: const BoxDecoration(
                                 //color: Colors.lightBlueAccent,
@@ -45,7 +65,9 @@ class Footer extends StatelessWidget {
                                         'assets/logo/logo-eksad.png'),
                                     fit: BoxFit.fill)),
                           ),
-                          const Spacer(),
+                          const Spacer(
+                            flex: 8,
+                          ),
                           Container(
                             width: screenSize.width * 0.2,
                             height: screenSize.height * 0.04,
@@ -66,53 +88,16 @@ class Footer extends StatelessWidget {
                             flex: 2,
                           ),
                           Container(
-                            width: screenSize.width * 0.14,
+                            width: screenSize.width * 0.16,
                             height: screenSize.height * 0.03,
                             //color: Colors.blue,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                IconButton(
-                                    onPressed: () {
-                                      _launchLinkedIn();
-                                    },
-                                    icon: const Icon(
-                                      FontAwesomeIcons.linkedinIn,
-                                      size: 25,
-                                    ),
-                                    iconSize: 25,
-                                    color: Colors.black),
-                                IconButton(
-                                  onPressed: () {
-                                    _launchTwitter();
-                                  },
-                                  icon: const Icon(
-                                    FontAwesomeIcons.twitter,
-                                    size: 25,
-                                  ),
-                                  iconSize: 25,
-                                  color: Colors.black,
-                                ),
-                                IconButton(
-                                    onPressed: () {
-                                      _launchInstagram();
-                                    },
-                                    icon: const Icon(
-                                      FontAwesomeIcons.instagram,
-                                      size: 25,
-                                    ),
-                                    iconSize: 25,
-                                    color: Colors.black),
-                                IconButton(
-                                    onPressed: () {
-                                      _launchYoutube();
-                                    },
-                                    icon: const Icon(
-                                      FontAwesomeIcons.youtube,
-                                      size: 25,
-                                    ),
-                                    iconSize: 25,
-                                    color: Colors.black)
+                              children: const [
+                                ApiLinkedin(),
+                                ApiTwitter(),
+                                ApiInstagram(),
+                                ApiYoutube()
                               ],
                             ),
                           ),
@@ -139,51 +124,11 @@ class Footer extends StatelessWidget {
                           SizedBox(
                             width: screenSize.width * 0.25,
                             height: screenSize.height * 0.04,
-                            child: FooterHead('Contact'),
+                            child: FooterHead('  Contact'),
                           ),
                           const Spacer(),
-                          Container(
-                            width: screenSize.width * 0.19,
-                            child: ListTile(
-                              leading: const Icon(
-                                Icons.phone,
-                                size: 23,
-                                color: Colors.black,
-                              ),
-                              title: TextButton(
-                                  onPressed: () {
-                                    launch('tel:02157958040');
-                                  },
-                                  child: Text(
-                                    '(021) 5795 - 8040',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: Colors.black87,
-                                    ),
-                                  )),
-                            ),
-                          ),
-                          Container(
-                            width: screenSize.width * 0.2,
-                            child: ListTile(
-                              leading: const Icon(
-                                Icons.mail,
-                                size: 23,
-                                color: Colors.black,
-                              ),
-                              title: TextButton(
-                                onPressed: () {
-                                  launch(
-                                      'mailto:Info@eksad.com?subject=Info MCS');
-                                },
-                                child: Text(
-                                  'info@eksad.com',
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 16, color: Colors.black87,letterSpacing: 1.1),
-                                ),
-                              ),
-                            ),
-                          ),
+                          const TelphoneApi(),
+                          const EmailAPI(),
                           Container(
                             width: screenSize.width * 0.26,
                             height: screenSize.height * 0.27,
@@ -203,10 +148,9 @@ class Footer extends StatelessWidget {
                                     '\nGde Agung Blok E3.2 '
                                     '\nMega Kuningan, \nJakarta Selatan 12950',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 15,
-                                      height: 1.45,
-                                      letterSpacing: 1.1
-                                    ),
+                                        fontSize: 15,
+                                        height: 1.45,
+                                        letterSpacing: 1.1),
                                     textAlign: TextAlign.left,
                                   ),
                                 )),
@@ -243,7 +187,7 @@ class Footer extends StatelessWidget {
 }
 
 class FooterBody extends StatelessWidget {
-  FooterBody({Key? key, required this.teks}) : super(key: key);
+  const FooterBody({Key? key, required this.teks}) : super(key: key);
   final String teks;
 
   @override
@@ -258,50 +202,242 @@ class FooterBody extends StatelessWidget {
   }
 }
 
-void _launchLinkedIn() async {
-  String url() {
-    return "https://www.linkedin.com/company/pt-tiga-daya-digital-indonesia-triputra-group-eksad-technology";
-  }
+class ApiLinkedin extends StatefulWidget {
+  const ApiLinkedin({Key? key}) : super(key: key);
 
-  if (await canLaunch(url())) {
-    await launch(url());
-  } else {
-    throw 'Could not launch ${url()}';
+  @override
+  State<ApiLinkedin> createState() => _ApiLinkedinState();
+}
+
+class _ApiLinkedinState extends State<ApiLinkedin> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<dynamic>>(
+      future: getWaDesc(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        var pgm = snapshot.data[0];
+
+        if (snapshot.hasError ||
+            snapshot.data == null ||
+            snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        return IconButton(
+            onPressed: () {
+              // ln = ;
+              launch(pgm['linkedin']);
+              // _launchLinkedIn();
+            },
+            icon: const Icon(
+              FontAwesomeIcons.linkedinIn,
+              size: 25,
+            ),
+            iconSize: 35,
+            color: Colors.black);
+      },
+    );
   }
 }
 
-void _launchTwitter() async {
-  String url() {
-    return "https://twitter.com/eksadtechnology/";
-  }
+class ApiTwitter extends StatefulWidget {
+  const ApiTwitter({Key? key}) : super(key: key);
 
-  if (await canLaunch(url())) {
-    await launch(url());
-  } else {
-    throw 'Could not launch ${url()}';
+  @override
+  State<ApiTwitter> createState() => _ApiTwitterState();
+}
+
+class _ApiTwitterState extends State<ApiTwitter> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<dynamic>>(
+      future: getTwDesc(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        var pgm = snapshot.data[0];
+
+        if (snapshot.hasError ||
+            snapshot.data == null ||
+            snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        return IconButton(
+            onPressed: () {
+              // ln = ;
+              launch(pgm['twitter']);
+              // _launchLinkedIn();
+            },
+            icon: const Icon(
+              FontAwesomeIcons.twitter,
+              size: 25,
+            ),
+            iconSize: 35,
+            color: Colors.black);
+      },
+    );
   }
 }
 
-void _launchInstagram() async {
-  String url() {
-    return "https://www.instagram.com/eksad_technology/";
-  }
+class ApiInstagram extends StatefulWidget {
+  const ApiInstagram({Key? key}) : super(key: key);
 
-  if (await canLaunch(url())) {
-    await launch(url());
-  } else {
-    throw 'Could not launch ${url()}';
+  @override
+  State<ApiInstagram> createState() => _ApiInstagramState();
+}
+
+class _ApiInstagramState extends State<ApiInstagram> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<dynamic>>(
+      future: getIgDesc(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        var pgm = snapshot.data[0];
+
+        if (snapshot.hasError ||
+            snapshot.data == null ||
+            snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        return IconButton(
+            onPressed: () {
+              // ln = ;
+              launch(pgm['instagram']);
+              // _launchLinkedIn();
+            },
+            icon: const Icon(
+              FontAwesomeIcons.instagram,
+              size: 25,
+            ),
+            iconSize: 35,
+            color: Colors.black);
+      },
+    );
   }
 }
 
-void _launchYoutube() async {
-  String url() {
-    return "https://www.youtube.com/channel/UCiZgIbpWgrAMrHW-TaS9EPw";
-  }
+class ApiYoutube extends StatefulWidget {
+  const ApiYoutube({Key? key}) : super(key: key);
 
-  if (await canLaunch(url())) {
-    await launch(url());
-  } else {
-    throw 'Could not launch ${url()}';
+  @override
+  State<ApiYoutube> createState() => _ApiYoutubeState();
+}
+
+class _ApiYoutubeState extends State<ApiYoutube> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<dynamic>>(
+        future: getYtDesc(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          var pgm = snapshot.data[0];
+
+          if (snapshot.hasError ||
+              snapshot.data == null ||
+              snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          }
+          return IconButton(
+              onPressed: () {
+                // ln = ;
+                launch(pgm['youtube']);
+                // _launchLinkedIn();
+              },
+              icon: const Icon(
+                FontAwesomeIcons.youtube,
+                size: 25,
+              ),
+              iconSize: 35,
+              color: Colors.black);
+        });
+  }
+}
+
+class TelphoneApi extends StatefulWidget {
+  const TelphoneApi({Key? key}) : super(key: key);
+
+  @override
+  State<TelphoneApi> createState() => _TelphoneApiState();
+}
+
+class _TelphoneApiState extends State<TelphoneApi> {
+  String no = '';
+  @override
+  Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+    return FutureBuilder<List<dynamic>>(
+      future: getSettingDesc(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        var pgm = snapshot.data[0];
+        if (snapshot.hasError ||
+            snapshot.data == null ||
+            snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        return Container(
+          width: screenSize.width * 0.23,
+          child: ListTile(
+            onTap: (){
+              no = pgm['no'];
+              //02157958040
+              launch('tel:$no');
+            },
+            minLeadingWidth: 50,
+            leading: const Icon(
+              Icons.phone,
+              size: 23,
+              color: Colors.black,
+            ),
+            title: Text(
+              pgm['no'],
+              style: GoogleFonts.poppins(
+                  fontSize: 16, color: Colors.black87, letterSpacing: 1.5),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class EmailAPI extends StatefulWidget {
+  const EmailAPI({Key? key}) : super(key: key);
+
+  @override
+  State<EmailAPI> createState() => _EmailAPIState();
+}
+
+class _EmailAPIState extends State<EmailAPI> {
+  String email = '';
+  @override
+  Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+    return FutureBuilder<List<dynamic>>(
+      future: getSettingDesc(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        var pgm = snapshot.data[0];
+        if (snapshot.hasError ||
+            // snapshot.data == null ||
+            snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        return Container(
+          width: screenSize.width * 0.22,
+          child: ListTile(
+            minLeadingWidth: 50,
+            onTap: (){
+              email = pgm['email'];
+              launch('mailto:$email?subject=Info MCS');
+            },
+            leading: const Icon(
+              Icons.mail,
+              size: 23,
+              color: Colors.black,
+            ),
+            title: Text(
+              pgm['email'],
+              style: GoogleFonts.poppins(
+                  fontSize: 16, color: Colors.black87, letterSpacing: 1.1),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

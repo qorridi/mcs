@@ -15,7 +15,7 @@ class Home4_solution extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: screenSize.height * 0.55,
+      height: screenSize.height * 0.62,
       width: screenSize.width,
       color: Colors.grey[200],
       child: Column(
@@ -26,12 +26,12 @@ class Home4_solution extends StatelessWidget {
           Center(
             child: Text("Why Choose Us?",
                 style: GoogleFonts.poppins(
-                    fontSize: 29,
+                    fontSize: 27,
                     color: const Color(0xff1e5ea8),
                     fontWeight: FontWeight.bold)),
           ),
           const SizedBox(
-            height: 20,
+            height: 30,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +50,7 @@ class Home4_solution extends StatelessWidget {
                         direction: Direction.horizontal,
                         offset: -0.2,
                         child: Image.asset(
-                          "assets/icons/icon1.png",
+                          "assets/icons/mcs1.png",
                           height: screenSize.height * 0.1,
                         ),
                       ),
@@ -77,7 +77,7 @@ class Home4_solution extends StatelessWidget {
                     ),
                     Container(
                       width: 200,
-                      height: 100,
+                      height: 115,
                       child: ShowUpAnimation(
                         delayStart: const Duration(seconds: 1),
                         direction: Direction.horizontal,
@@ -86,7 +86,7 @@ class Home4_solution extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: GoogleFonts.poppins(
                             color: const Color(0xff111111),
-                            fontSize: 16,
+                            fontSize: 15,
                           ),
                         ),
                       ),
@@ -107,7 +107,7 @@ class Home4_solution extends StatelessWidget {
                         direction: Direction.horizontal,
                         offset: -0.2,
                         child: Image.asset(
-                          "assets/icons/icon2.png",
+                          "assets/icons/mcs.png",
                           height: screenSize.height * 0.1,
                         ),
                       ),
@@ -134,7 +134,7 @@ class Home4_solution extends StatelessWidget {
                     ),
                     Container(
                       width: 200,
-                      height: 100,
+                      height: 115,
                       child: ShowUpAnimation(
                         delayStart: const Duration(seconds: 1),
                         direction: Direction.horizontal,
@@ -143,7 +143,7 @@ class Home4_solution extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: GoogleFonts.poppins(
                             color: const Color(0xff111111),
-                            fontSize: 16,
+                            fontSize: 15,
                           ),
                         ),
                       ),
@@ -164,7 +164,7 @@ class Home4_solution extends StatelessWidget {
                         direction: Direction.horizontal,
                         offset: -0.2,
                         child: Image.asset(
-                          "assets/icons/icon3.png",
+                          "assets/icons/mcs2.png",
                           height: screenSize.height * 0.1,
                         ),
                       ),
@@ -191,7 +191,7 @@ class Home4_solution extends StatelessWidget {
                     ),
                     Container(
                       width: 200,
-                      height: 100,
+                      height: 115,
                       child: ShowUpAnimation(
                         delayStart: const Duration(seconds: 1),
                         direction: Direction.horizontal,
@@ -200,7 +200,7 @@ class Home4_solution extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: GoogleFonts.poppins(
                             color: const Color(0xff111111),
-                            fontSize: 16,
+                            fontSize: 15,
                           ),
                         ),
                       ),
@@ -221,7 +221,7 @@ class Home4_solution extends StatelessWidget {
                         direction: Direction.horizontal,
                         offset: -0.2,
                         child: Image.asset(
-                          "assets/icons/icon4.png",
+                          "assets/icons/mcs3.png",
                           height: screenSize.height * 0.1,
                         ),
                       ),
@@ -248,7 +248,7 @@ class Home4_solution extends StatelessWidget {
                     ),
                     Container(
                       width: 200,
-                      height: 100,
+                      height: 115,
                       child: ShowUpAnimation(
                         delayStart: const Duration(seconds: 1),
                         direction: Direction.horizontal,
@@ -257,7 +257,7 @@ class Home4_solution extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: GoogleFonts.poppins(
                             color: const Color(0xff111111),
-                            fontSize: 16,
+                            fontSize: 15,
                           ),
                         ),
                       ),

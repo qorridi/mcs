@@ -13,8 +13,10 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
   final formKey = GlobalKey<FormState>();
   String nm = '';
   String pt = '';
+  String ulahfahrur ='';
+  String link ='';
   int selectedIndex = 0;
-  int id = 0;
+  String id = '';
   String selectname = '';
   String selectpath = '';
   TextEditingController _controllerName = TextEditingController();
@@ -48,7 +50,7 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                       showDialog<String>(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
-                          title: const Center(child: Text('ADD NEW PARTNER')),
+                          title: ListTile(leading: Icon(Icons.person_add),title: Text('Add New Partner'),),
                           content: Form(
                             key: formKey,
                             child: Column(
@@ -56,11 +58,29 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                               verticalDirection: VerticalDirection.down,
                               children: [
                                 Container(
-                                  width: 200,
+                                  width: 250,
                                   child: TextFormField(
                                     textAlign: TextAlign.start,
                                     decoration: InputDecoration(
-                                      labelText: "Masukkan Nama",
+                                      labelText: "Input Name",
+                                      hintStyle: const TextStyle(),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5.0)),
+                                    ),
+                                    onChanged: (value) => nm = value,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  width: 250,
+                                  child: TextFormField(
+                                    textAlign: TextAlign.start,
+                                    //maxLines: 2,
+                                    decoration: InputDecoration(
+                                      labelText: "Input Path Image",
                                       hintStyle: const TextStyle(),
                                       border: OutlineInputBorder(
                                           borderRadius:
@@ -70,44 +90,28 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                                   ),
                                 ),
                                 const SizedBox(
-                                  height: 40,
+                                  height: 20,
                                 ),
                                 Container(
-                                  width: 200,
+                                  width: 250,
                                   child: TextFormField(
                                     textAlign: TextAlign.start,
-                                    maxLines: 7,
                                     decoration: InputDecoration(
-                                      labelText: "Masukkan Keterangan",
+                                      labelText: "Input Link",
                                       hintStyle: const TextStyle(),
                                       border: OutlineInputBorder(
                                           borderRadius:
-                                              BorderRadius.circular(5.0)),
+                                          BorderRadius.circular(5.0)),
                                     ),
-                                    onChanged: (value) => nm = value,
+                                    onChanged: (value) => link = value,
                                   ),
                                 ),
                               ],
                             ),
                           ),
                           actions: <Widget>[
-                            TextButton(
-                              // onPressed: () {
-                              //   if (nm.trim().isEmpty && nm == null) {
-                              //     print('Nama Page Kosong');
-                              //   } else if (pt.trim().isEmpty && pt == null) {
-                              //     print('Isi page kosong');
-                              //   }
+                            ElevatedButton(
 
-                              //   print(nm + '\n' + pt);
-                              //   PartnerApi().createPartner(nm, pt);
-                              //   print('Data Tersimpan');
-                              //   Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => const Dashboard(),
-                              //     ),
-                              //   );
                               onPressed: () {
                                 Navigator.pop(context);
 
@@ -128,7 +132,7 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                                         content: Text('Name Can\'t Be Empty')),
                                   );
                                 } else {
-                                  createPartner(nm, pt).then(
+                                  createPartner(ulahfahrur,nm, pt,link).then(
                                     (isSuccess) {
                                       if (isSuccess) {
                                         setState(() {});
@@ -151,23 +155,7 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                         ),
                       );
                     },
-                    child: const Text('Add New Partner'))
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextButton(
-                  style: TextButton.styleFrom(
-                    primary: Colors.black,
-                    textStyle: const TextStyle(fontSize: 15),
-                  ),
-                  onPressed: () {},
-                  child: const Text("All (3)"),
-                ),
+                    child: const Text('Add New Partner')),
                 const Spacer(
                   flex: 3,
                 ),
@@ -183,12 +171,12 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                       prefixIcon: const Icon(Icons.search),
                       enabledBorder: OutlineInputBorder(
                         borderSide:
-                            const BorderSide(width: 1, color: Colors.blue),
+                        const BorderSide(width: 1, color: Colors.blue),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide:
-                            const BorderSide(width: 1, color: Colors.blue),
+                        const BorderSide(width: 1, color: Colors.blue),
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
@@ -210,6 +198,7 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                             gradient: LinearGradient(
                               colors: <Color>[
                                 Color(0xFF42A5F5),
+                                Color(0xFF3FA4F6),
                               ],
                             ),
                           ),
@@ -231,17 +220,34 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
               ],
             ),
           ),
-          Row(
-            children: const [
-              Spacer(
-                flex: 6,
-              ),
-              Text("3 items"),
-            ],
-          ),
-          const SizedBox(
+          SizedBox(
             height: 10,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                // TextButton(
+                //   style: TextButton.styleFrom(
+                //     primary: Colors.black,
+                //     textStyle: const TextStyle(fontSize: 15),
+                //   ),
+                //   onPressed: () {},
+                //   child: const Text("All (3)"),
+                // ),
+
+              ],
+            ),
           ),
+          // Row(
+          //   children: const [
+          //     Spacer(
+          //       flex: 6,
+          //     ),
+          //     Text("3 items"),
+          //   ],
+          // ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Container(
             child: FutureBuilder<List<dynamic>>(
               future: getPartner(),
@@ -258,7 +264,8 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                     DataColumn(label: Text('Id')),
                     DataColumn(label: Text('Name')),
                     DataColumn(label: Text('Path')),
-                    DataColumn(label: Text('Status')),
+                   // DataColumn(label: Text('Link')),
+                  //  DataColumn(label: Text('Status')),
                     DataColumn(label: Text('Action')),
                   ],
                   rows: List.generate(
@@ -267,7 +274,7 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                       var pgm = snapshot.data[index];
                       return DataRow(cells: [
                         DataCell(
-                          Text(pgm['partnerId'].toString()),
+                          Text(pgm['partnerId']),
                         ),
                         DataCell(
                           Text(pgm['filename']),
@@ -275,62 +282,11 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                         DataCell(
                           Text(pgm['filepath']),
                         ),
-                        DataCell(
-                          Text(pgm['status']),
-                        ),
                         // DataCell(
-                        //   TextButton(
-                        //     style: TextButton.styleFrom(
-                        //       padding: const EdgeInsets.all(16.0),
-                        //       primary: Colors.black,
-                        //       backgroundColor: Color.fromARGB(255, 245, 27, 27),
-                        //       textStyle: const TextStyle(fontSize: 15),
-                        //     ),
-                        //     onPressed: () {
-                        //       showDialog(
-                        //         context: context,
-                        //         builder: (context) {
-                        //           return AlertDialog(
-                        //             title: Text("Warning"),
-                        //             content: Text(
-                        //                 "Are you sure want to delete data partner ${pgm['filename']}?"),
-                        //             actions: <Widget>[
-                        //               TextButton(
-                        //                 child: Text("Yes"),
-                        //                 onPressed: () {
-                        //                   Navigator.pop(context);
-                        //                   PartnerApi()
-                        //                       .deletePartner(pgm['partnerId'])
-                        //                       .then((isSuccess) {
-                        //                     if (isSuccess) {
-                        //                       setState(() {});
-                        //                       Scaffold.of(this.context)
-                        //                           .showSnackBar(SnackBar(
-                        //                               content: Text(
-                        //                                   "Delete data success")));
-                        //                     } else {
-                        //                       Scaffold.of(this.context)
-                        //                           .showSnackBar(SnackBar(
-                        //                               content: Text(
-                        //                                   "Delete data failed")));
-                        //                     }
-                        //                   });
-                        //                 },
-                        //               ),
-                        //               TextButton(
-                        //                 child: Text("No"),
-                        //                 onPressed: () {
-                        //                   Navigator.pop(context);
-                        //                 },
-                        //               ),
-                        //             ],
-                        //           );
-                        //         },
-                        //       );
-                        //     },
-                        //     child: const Text("Delete"),
-                        //   ),
+                        //   Text(pgm['link']),
                         // ),
+
+
                         DataCell(
                           Row(
                             children: [
@@ -370,24 +326,7 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                                           verticalDirection:
                                               VerticalDirection.down,
                                           children: [
-                                            // Container(
-                                            //   width: 200,
-                                            //   child: TextFormField(
-                                            //     controller: _controllerId,
-                                            //     textAlign: TextAlign.start,
-                                            //     decoration: InputDecoration(
-                                            //       labelText: "Masukkan ID News",
-                                            //       hintStyle: TextStyle(),
-                                            //       border: OutlineInputBorder(
-                                            //           borderRadius:
-                                            //           BorderRadius
-                                            //               .circular(5.0)),
-                                            //     ),
-                                            //
-                                            //     onChanged: (value) =>
-                                            //     id = int.parse(value),
-                                            //   ),
-                                            // ),
+
                                             const SizedBox(
                                               height: 10,
                                             ),
@@ -520,7 +459,15 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                                     ),
                                   );
                                 },
-                                child: const Text('Edit Partner'),
+                                child: const Text('Edit'),
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.all(16.0),
+                                  primary: Colors.white,
+                                  backgroundColor: const Color.fromARGB(
+                                      200, 23, 104, 210),
+                                  textStyle: const TextStyle(fontSize: 15),
+
+                                ),
                               ),
                               const SizedBox(
                                 width: 10,
@@ -540,7 +487,7 @@ class _OurpartnerDashboardState extends State<OurpartnerDashboard> {
                                       return AlertDialog(
                                         title: const Text("Warning"),
                                         content: Text(
-                                            "Are you sure want to delete data partner ${pgm['title']}?"),
+                                            "Are you sure want to delete data partner ${pgm['partnerId']}?"),
                                         actions: <Widget>[
                                           TextButton(
                                             child: const Text("Yes"),

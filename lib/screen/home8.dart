@@ -16,11 +16,13 @@ class Home8_contact_us extends StatelessWidget {
   final emailController = TextEditingController();
   final messageController = TextEditingController();
 
+  String pattern = r'(\+62|62|0)(\d{2,3})?\)?[ .-]?\d{2,4}[ .-]?\d{2,4}[ .-]?\d{2,4}';
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Container(
-      height: 455,
+      height: 470,
       width: screenSize.width,
       // color: Colors.blue,
       decoration: const BoxDecoration(
@@ -48,31 +50,35 @@ class Home8_contact_us extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Spacer(
-                    flex: 1,
+                    flex: 2,
                   ),
-                  Text("Leave your contact info and",
+                  Text("Leave Your Contact Info and Let's Discuss Business",
                       style: GoogleFonts.poppins(
                           color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold)),
-                  const Spacer(
-                    flex: 1,
-                  ),
-                  Text("Let's Discuss Business",
-                      style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 40,
-                          // fontWeight: FontWeight.bold,
-                          letterSpacing: 1.1)),
+                          fontSize: 30,
+                          fontWeight: FontWeight.w500)),
+                  // const Spacer(
+                  //   flex: 1,
+                  // ),
+                  // Text("Let's Discuss Business",
+                  //     style: GoogleFonts.poppins(
+                  //         color: Colors.white,
+                  //         fontSize: 35,
+                  //
+                  //         fontWeight: FontWeight.w500,
+                  //         // fontWeight: FontWeight.bold,
+                  //         letterSpacing: 1.1)
+                  // ),
                   const Spacer(
                     flex: 1,
                   ),
                   Text(
                       "We’ll contact you immediately to discuss potential business",
                       style: GoogleFonts.poppins(
-                          color: Colors.white, fontSize: 23)),
+                          color: Colors.white, fontSize: 18,
+                          fontWeight: FontWeight.w500)),
                   const Spacer(
-                    flex: 2,
+                    flex: 3,
                   ),
                 ],
               ),
@@ -81,7 +87,7 @@ class Home8_contact_us extends StatelessWidget {
           const Spacer(),
           Container(
             padding: const EdgeInsets.all(10),
-            height: screenSize.height * 0.75,
+            height: screenSize.height * 0.77,
             width: screenSize.width * 0.45,
             child: Form(
               key: _formKey,
@@ -106,6 +112,7 @@ class Home8_contact_us extends StatelessWidget {
                         hintText: "Enter your Name",
                         fillColor: Colors.white,
                         filled: true,
+                        errorStyle: TextStyle(color: Colors.white),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.zero,
                           borderSide: BorderSide(width: 1, color: Colors.white),
@@ -115,6 +122,12 @@ class Home8_contact_us extends StatelessWidget {
                           borderSide: BorderSide(width: 1, color: Colors.white),
                         ),
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   const SizedBox(
@@ -155,6 +168,7 @@ class Home8_contact_us extends StatelessWidget {
                             hintText: "Enter a valid phone number",
                             fillColor: Colors.white,
                             filled: true,
+                            errorStyle: TextStyle(color: Colors.white),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.zero,
                               borderSide:
@@ -166,6 +180,14 @@ class Home8_contact_us extends StatelessWidget {
                                   BorderSide(width: 1, color: Colors.white),
                             ),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your phone number';
+                            }else if(!RegExp(pattern).hasMatch(value)){
+                              return 'Start with 628 or 08';
+                            }
+                            return null;
+                          },
                         ),
                       ),
                       const SizedBox(
@@ -179,6 +201,7 @@ class Home8_contact_us extends StatelessWidget {
                             hintText: "Enter a valid email address",
                             fillColor: Colors.white,
                             filled: true,
+                            errorStyle: TextStyle(color: Colors.white),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.zero,
                               borderSide:
@@ -190,6 +213,12 @@ class Home8_contact_us extends StatelessWidget {
                                   BorderSide(width: 1, color: Colors.white),
                             ),
                           ),
+                           validator: (value) {
+                            if (value == null || value.isEmpty || !value.isValidEmail()) {
+                              return 'Please enter your email address';
+                            }
+                            return null;
+                          },
                         ),
                       ),
                       const SizedBox(
@@ -215,6 +244,7 @@ class Home8_contact_us extends StatelessWidget {
                         hintText: "Enter your message",
                         fillColor: Colors.white,
                         filled: true,
+                        errorStyle: TextStyle(color: Colors.white),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.zero,
                           borderSide: BorderSide(width: 1, color: Colors.white),
@@ -225,9 +255,9 @@ class Home8_contact_us extends StatelessWidget {
                         ),
                       ),
                       maxLines: 5,
-                      validator: (value) {
+                     validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return '*Required';
+                          return 'Please enter message';
                         }
                         return null;
                       },
@@ -306,7 +336,7 @@ class Home8_contact_us extends StatelessWidget {
     final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
     const serviceId = 'service_zfjchwr';
     const templateId = 'template_1wbd3w9';
-    const userId = 'DP7R9Yu0J2SBQu2DC';
+    const userId = 'bObAAnVyKUzSzNhI-';
     final response = await http.post(url,
         headers: {
           'Content-Type': 'application/json'
@@ -323,5 +353,13 @@ class Home8_contact_us extends StatelessWidget {
           }
         }));
     return response.statusCode;
+  }
+}
+
+extension EmailValidator on String {
+  bool isValidEmail() {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(this);
   }
 }

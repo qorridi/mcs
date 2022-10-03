@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multi_cloudv3/dashboard/dashboard.dart';
+import 'package:multi_cloudv3/dashboard/new_sidemenu.dart';
 import 'package:multi_cloudv3/login.dart';
 import 'package:multi_cloudv3/screen/home.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -21,12 +22,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Multi Cloud Solution By EKSAD",
+     // title: "Multi Cloud Solution By EKSAD",
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
         // When navigating to the "/second" route, build the SecondScreen widget.
-        '/admin': (context) => const Dashboard(),
+        //'/admin': (context) => const DashboardAdmin(),
+        '/admin': (context) => const login(),
+       // '/dashboard': (context) => const DashboardAdmin(),
 
       },
 

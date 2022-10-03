@@ -2,11 +2,21 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-Future<bool> createSetting(im, tt, tl, em, no) async {
+
+var cmd = 'https://dmsdev-api.eksad.com/gateway/mcs/v1/cmd';
+var qry = 'https://dmsdev-api.eksad.com/gateway/mcs/v1/qry';
+
+Future<bool> createSetting(im, tt, em, no) async {
   final response = await http.post(
-      Uri.parse('http://10.3.4.231:8081/setting/saveSetting'),
+      Uri.parse('$cmd/setting/saveSetting'),
       body: jsonEncode(
-          {"image": im, "title": tt, "tagline": tl, "email": em, "no": no}),
+          {
+            "image": im,
+            "title": tt,
+            // "tagline": tl,
+            "email": em,
+            "no": no,
+          }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       });
@@ -17,18 +27,18 @@ Future<bool> createSetting(im, tt, tl, em, no) async {
   }
 }
 
-Future<bool> updateSetting(id, image, name, title, tagline, email, no) async {
+Future<bool> updateSetting(id,  title, email, no,) async {
   final response = await http
-      .put(Uri.parse('http://10.3.4.231:8081/setting/updateSetting'),
+      .put(Uri.parse('$cmd/setting/updateSetting'),
           body: jsonEncode({
             "idsetting": id,
-            "image": image,
-            "name": name,
+           // "image": image,
+            //"name": name,
             "title": title,
-            "tagline": tagline,
+            // "tagline": tagline,
             "email": email,
             "no": no,
-            "idrole": "R001"
+
           }),
           headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -42,6 +52,18 @@ Future<bool> updateSetting(id, image, name, title, tagline, email, no) async {
 
 Future<List<dynamic>> getSetting() async {
   var response = await http.get(
-      Uri.parse('http://10.3.4.231:8082/setting/getAllSettingByIdRole'));
+      Uri.parse('$cmd/setting/getAllSettingByIdRole'));
+  return jsonDecode(response.body)['data'];
+}
+
+Future<List<dynamic>> getSettingDesc() async {
+  var response = await http.get(
+      Uri.parse('$qry/setting/getSettingByIdDesc'));
+  return jsonDecode(response.body)['data'];
+}
+
+Future<dynamic> getSettingDesc2() async {
+  var response = await http.get(
+      Uri.parse('$qry/setting/getSettingByIdDesc'));
   return jsonDecode(response.body)['data'];
 }

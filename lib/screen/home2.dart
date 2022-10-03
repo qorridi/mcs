@@ -32,7 +32,7 @@ class Home2 extends StatelessWidget {
           ),
           Container(
             width: screenSize.width,
-            height: 100,
+            height: 90,
             child: Text(
                 'We are a one-stop Cloud service provider for world-class '
                 'Cloud services with diverse options which range from Cloud consulting '
@@ -40,11 +40,11 @@ class Home2 extends StatelessWidget {
                 'scale and migrate your chosen application workloads.',
                 textAlign: TextAlign.justify,
                 style: GoogleFonts.poppins(
-                    fontSize: 17, letterSpacing: 1.1, height: 1.4)),
+                    fontSize: 15, letterSpacing: 1.1, height: 1.5)),
           ),
           Container(
             width: screenSize.width,
-            height: 150,
+            height: 130,
             child: Text(
                 'Instead of operating within the constraints of a single cloud vendor,'
                 ' a multi-cloud strategy allows you to access the cloud services from '
@@ -54,7 +54,7 @@ class Home2 extends StatelessWidget {
                 ' innovation and grow your business faster than if your data was locked into a single cloud.',
                 textAlign: TextAlign.justify,
                 style: GoogleFonts.poppins(
-                    fontSize: 17, letterSpacing: 1.1, height: 1.4)),
+                    fontSize: 15, letterSpacing: 1.1, height: 1.5)),
           ),
         ],
       ),

@@ -2,10 +2,18 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-Future<bool> createNews(title, news, image) async {
+var cmd = 'https://dmsdev-api.eksad.com/gateway/mcs/v1/cmd';
+var qry = 'https://dmsdev-api.eksad.com/gateway/mcs/v1/qry';
+
+Future<bool> createNews(title, news, image,link) async {
   final response = await http.post(
-      Uri.parse('http://10.3.4.231:8081/post/savePost'),
-      body: jsonEncode({"title": title, "post": news, "image": image}),
+      Uri.parse('$cmd/post/savePost'),
+      body: jsonEncode({
+        "title": title,
+        "news": news,
+        "image": image,
+        "link": link
+      }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       });
@@ -18,8 +26,11 @@ Future<bool> createNews(title, news, image) async {
 
 Future<bool> updateNews(id, title, news) async {
   final response = await http.post(
-      Uri.parse('http://10.3.4.231:8081/post/savePost'),
-      body: jsonEncode({"idpost": id, "title": title, "post": news}),
+      Uri.parse('$cmd/post/savePost'),
+      body: jsonEncode({
+        "idnews": id,
+        "title": title,
+        "news": news}),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       });
@@ -32,13 +43,14 @@ Future<bool> updateNews(id, title, news) async {
 
 Future<List<dynamic>> getNews() async {
   var response = await http
-      .get(Uri.parse('http://10.3.4.231:8082/post/getAllPostByIdRole'));
+      .get(Uri.parse('$qry/post/getAllPostByIdRole'));
   return jsonDecode(response.body)['data'];
 }
 
 Future<bool> deleteNews(id) async {
-  final response = await http.delete(
-    Uri.parse('http://10.3.4.231:8081/post/deletePost/$id'),
+  final response = await http.post(
+    Uri.parse('$cmd/post/updatePost'),
+    body: jsonEncode({"idnews": id,}),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },

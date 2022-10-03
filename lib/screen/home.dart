@@ -18,10 +18,20 @@ import 'package:multi_cloudv3/screen_small/small_home5.dart';
 import 'package:multi_cloudv3/screen_small/small_home6.dart';
 import 'package:multi_cloudv3/screen_small/small_home7.dart';
 import 'package:multi_cloudv3/screen_small/small_home8.dart';
+import 'package:multi_cloudv3/widget/Scroll_top.dart';
 import 'package:multi_cloudv3/widget/whatsapp.dart';
+import '../api/setting_api.dart';
 import '../widget/responsive.dart';
 import 'appbar.dart';
 import 'home5.dart';
+import 'package:flutter/services.dart';
+
+void setPageTitle(String title, BuildContext context) async {
+  SystemChrome.setApplicationSwitcherDescription(ApplicationSwitcherDescription(
+    label: title,
+    primaryColor: Theme.of(context).primaryColor.value, // This line is required
+  ));
+}
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -47,11 +57,15 @@ class _HomePageState extends State<HomePage> {
         curve: Curves.fastLinearToSlowEaseIn);
   }
 
+
+
   int selectedIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
+
+    //  setPageTitle(title, context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: ResponsiveWidget.isSmallScreen(context)
@@ -61,74 +75,106 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: WAChat(),
       drawer: _drawerWidget(),
       body: ResponsiveWidget.isSmallScreen(context)
-          ? ListView(
-              scrollDirection: Axis.vertical,
-              controller: controller2,
+          ? Stack(
               children: [
-                SmallHome(wijet: Button_scroll_small()),
-                const SmallHome2(),
-                const SmallHome3_partner(),
-                SmallHome4_solution(screenSize: screenSize),
-                const SmallHome5_industry(),
-                const SmallHome6_advantages(),
-                const SmallHome7_news(),
-                SmallHome8_contact_us(),
-                SmallFooter(
-                  content1: kontenkecil1(screenSize),
-                  content2: kontenkecil2(screenSize),
+                FutureBuilder<dynamic>(
+                  future: getSettingDesc2(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    var pgm = snapshot.data[0];
+                    return  Title(
+                      title: pgm['title'],
+                      color: Colors.white,
+                      child: ListView(
+                        scrollDirection: Axis.vertical,
+                        controller: controller2,
+                        children: [
+                          SmallHome(wijet: Button_scroll_small()),
+                          const SmallHome2(),
+                          const SmallHome3_partner(),
+                          SmallHome4_solution(screenSize: screenSize),
+                          const SmallHome5_industry(),
+                          const SmallHome6_advantages(),
+                          const SmallHome7_news(),
+                          SmallHome8_contact_us(),
+                          SmallFooter(
+                            content1: kontenkecil1(screenSize),
+                            content2: kontenkecil2(screenSize),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
+
+                ScrollUpButton(controller2),
               ],
             )
-          : ListView(
-              scrollDirection: Axis.vertical,
-              controller: controller2,
+          : Stack(
               children: [
-                Home(wijet: Button_scroll_small()),
-                const Home2(),
-                const Home3_partner(),
-                Home4_solution(screenSize: screenSize),
-                const Home5_industry(),
-                const Home6_advantages(),
-                const Home7_news(),
-                Home8_contact_us(),
-                Footer(
-                  content1: konten1(screenSize),
-                  content2: konten2(screenSize),
+                FutureBuilder<dynamic>(
+                  future: getSettingDesc2(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    var pgm = snapshot.data[0];
+                    return Title(
+                      title: pgm['title'],
+                      color: Colors.white,
+                      child: ListView(
+                        scrollDirection: Axis.vertical,
+                        controller: controller2,
+                        children: [
+                          Home(wijet: Button_scroll()),
+                          const Home2(),
+                          const Home3_partner(),
+                          Home4_solution(screenSize: screenSize),
+                          const Home5_industry(),
+                          const Home6_advantages(),
+                          const Home7_news(),
+                          Home8_contact_us(),
+                          Footer(
+                            content1: konten1(screenSize),
+                            content2: konten2(screenSize),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
+                ScrollUpButton(controller2),
               ],
             ),
     );
   }
 
   Drawer _drawerWidget() => Drawer(
-    width: 200,
-    child: Column(
-      children: [
-        SizedBox(height: 50,),
-
-        ListTile(
-          leading: Icon(Icons.home),
-          title: Text('Home'),
-          onTap: () => _scrollToIndex(0) ,
+        width: 200,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Home'),
+              onTap: () => _scrollToIndex(0),
+            ),
+            ListTile(
+              leading: const Icon(Icons.people),
+              title: const Text('About Us'),
+              onTap: () => _scrollToIndex(420),
+            ),
+            ListTile(
+              leading: const Icon(Icons.lightbulb_outline_rounded),
+              title: const Text('Solution'),
+              onTap: () => _scrollToIndex(840),
+            ),
+            ListTile(
+              leading: const Icon(Icons.contact_phone),
+              title: const Text('Contact Us'),
+              onTap: () => _scrollToIndex(5410),
+            ),
+          ],
         ),
-        ListTile(
-          leading: Icon(Icons.people),
-          title: Text('About Us'),
-          onTap: () => _scrollToIndex(420),
-        ),
-        ListTile(
-          leading: Icon(Icons.lightbulb_outline_rounded),
-          title: Text('Solution'),
-          onTap: () => _scrollToIndex(840),
-        ),
-        ListTile(
-          leading: Icon(Icons.contact_phone),
-          title: Text('Contact Us'),
-          onTap: () => _scrollToIndex(5410),
-        ),
-      ],
-    ),
-  );
+      );
 
   ElevatedButton Button_scroll() {
     return ElevatedButton(
@@ -152,7 +198,7 @@ class _HomePageState extends State<HomePage> {
         _scrollToIndex(5410);
       },
       style: ElevatedButton.styleFrom(
-          primary: const Color(0xff1e5ea8), fixedSize: Size(50, 20)),
+          primary: const Color(0xff1e5ea8), fixedSize: const Size(50, 20)),
       child: Text(
         'CONTACT US',
         style: GoogleFonts.poppins(
@@ -172,42 +218,41 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Spacer(
-              flex: 1,
-            ),
-            IconButton(onPressed: () => _scaffoldKey.currentState!.openDrawer(), icon: Icon(Icons.list_outlined,size: 30,),),
-            const Spacer(
-              flex:2,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              height:75,
-              child: Image.asset("assets/logo/multicloudsolution.jpg"),
-            ),
-            const Spacer(
-              flex: 1,
-            ),
-            SizedBox(
-              height: 40,
-              width: 150,
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: "Search",
-                  suffixIcon: const Icon(Icons.search),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.grey),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(width: 1, color: Colors.grey),
-                  ),
-                ),
+            Spacer(),
+            IconButton(
+              onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+              icon: const Icon(
+                Icons.list_outlined,
+                size: 30,
               ),
             ),
-            const Spacer(
-              flex: 1,
+            Spacer(flex: 4,),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              height: 75,
+              child: Image.asset("assets/logo/multicloudsolution.jpg"),
             ),
+            Spacer(flex: 6,)
+            // SizedBox(
+            //   height: 40,
+            //   width: 150,
+            //   child: TextFormField(
+            //     decoration: InputDecoration(
+            //       labelText: "Search",
+            //       suffixIcon: const Icon(Icons.search),
+            //       enabledBorder: const OutlineInputBorder(
+            //         borderSide: BorderSide(width: 1, color: Colors.grey),
+            //       ),
+            //       focusedBorder: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(15),
+            //         borderSide: const BorderSide(width: 1, color: Colors.grey),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+
           ],
         ),
       ),
@@ -242,6 +287,9 @@ class _HomePageState extends State<HomePage> {
             ),
             Row(
               children: [
+                SizedBox(
+                  width: screenSize.width * 0.05,
+                ), //ilangin jika menggunakan searchbar
                 TextButton(
                   onPressed: () {
                     _scrollToIndex(0);
@@ -308,23 +356,23 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               width: screenSize.width * 0.03,
             ),
-            SizedBox(
-              height: 50,
-              width: 170,
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: "Search",
-                  suffixIcon: const Icon(Icons.search),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.grey),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(width: 1, color: Colors.grey),
-                  ),
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   height: 50,
+            //   width: 170,
+            //   child: TextFormField(
+            //     decoration: InputDecoration(
+            //       labelText: "Search",
+            //       suffixIcon: const Icon(Icons.search),
+            //       enabledBorder: const OutlineInputBorder(
+            //         borderSide: BorderSide(width: 1, color: Colors.grey),
+            //       ),
+            //       focusedBorder: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(15),
+            //         borderSide: const BorderSide(width: 1, color: Colors.grey),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             const Spacer(),
           ],
         ),
@@ -351,11 +399,12 @@ class _HomePageState extends State<HomePage> {
       );
 
   Center FooterHeadSmall(String title2) => Center(
-    child: Text(title2,
-    style: GoogleFonts.poppins(
-        fontSize: 22, fontWeight: FontWeight.bold, letterSpacing: 2),
-    ),
-  );
+        child: Text(
+          title2,
+          style: GoogleFonts.poppins(
+              fontSize: 22, fontWeight: FontWeight.bold, letterSpacing: 2),
+        ),
+      );
 
   Column konten1(Size screenSize) {
     return Column(
@@ -365,7 +414,7 @@ class _HomePageState extends State<HomePage> {
         Container(
           width: screenSize.width * 0.1,
           height: screenSize.height * 0.05,
-          child: FooterHead('Sitemap'),
+          child: FooterHead(' Sitemap'),
         ),
         const Spacer(
           flex: 3,
@@ -374,7 +423,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(0);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Home',
             )),
         const Spacer(),
@@ -382,7 +431,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(420);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'About Us',
             )),
         const Spacer(),
@@ -390,7 +439,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(750);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Solution',
             )),
         const Spacer(),
@@ -398,7 +447,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(3780);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Contact Us',
             )),
         const Spacer(
@@ -416,7 +465,7 @@ class _HomePageState extends State<HomePage> {
         Container(
             width: screenSize.width * 0.13,
             height: screenSize.height * 0.05,
-            child: FooterHead('Solution')),
+            child: FooterHead(' Solution')),
         const Spacer(
           flex: 3,
         ),
@@ -424,7 +473,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(1230);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Cloud Migration',
             )),
         const Spacer(),
@@ -432,7 +481,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(1230);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Consultation',
             )),
         const Spacer(),
@@ -440,7 +489,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(1230);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Local Support',
             )),
         const Spacer(),
@@ -448,7 +497,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(1230);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Cloud Implementation',
             )),
         const Spacer(
@@ -475,7 +524,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(0);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Home',
             )),
         const Spacer(),
@@ -483,7 +532,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(420);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'About Us',
             )),
         const Spacer(),
@@ -491,7 +540,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(840);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Solution',
             )),
         const Spacer(),
@@ -499,7 +548,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(5410);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Contact Us',
             )),
         const Spacer(
@@ -525,7 +574,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(1650);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Cloud Migration',
             )),
         const Spacer(),
@@ -533,7 +582,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(1650);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Consultation',
             )),
         const Spacer(),
@@ -541,7 +590,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(1650);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Local Support',
             )),
         const Spacer(),
@@ -549,7 +598,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _scrollToIndex(1650);
             },
-            child: FooterBody(
+            child: const FooterBody(
               teks: 'Cloud Implementation',
             )),
         const Spacer(

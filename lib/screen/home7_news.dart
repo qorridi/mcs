@@ -60,20 +60,20 @@ class _Home7_newsState extends State<Home7_news> {
                       height: 90,
                       width: screenSize.width * 0.24,
                       padding:
-                          const EdgeInsets.only(top: 20, right: 20, left: 20),
+                          const EdgeInsets.only(top: 30, right: 20, left: 20),
                       child: Text('Top Performing Partner of the year',
                           style: GoogleFonts.poppins(
-                              color: Colors.white, fontSize: 24),
+                              color: Colors.white, fontSize: 17,fontWeight: FontWeight.bold,letterSpacing: 1.3),
                           textAlign: TextAlign.center),
                     ),
                     Container(
-                      height: 100,
+                      height: 113,
                       padding: const EdgeInsets.symmetric(
                           vertical: 20, horizontal: 20),
                       child: Text(row1,
                           style: GoogleFonts.poppins(
                               color: Colors.white,
-                              fontSize: 17,
+                              fontSize: 15,
                               height: 1.2,
                               letterSpacing: 1.2),
                           textAlign: TextAlign.center),
@@ -87,7 +87,7 @@ class _Home7_newsState extends State<Home7_news> {
                         child: const Text(
                           'READ MORE',
                           style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 15,
                               decoration: TextDecoration.underline,
                               color: Colors.white),
                         ))
@@ -96,7 +96,7 @@ class _Home7_newsState extends State<Home7_news> {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey,
+                  color: Color.fromARGB(255, 29, 59, 189),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 width: screenSize.width * 0.25,
@@ -116,23 +116,23 @@ class _Home7_newsState extends State<Home7_news> {
                       height: 90,
                       width: screenSize.width * 0.24,
                       padding:
-                          const EdgeInsets.only(top: 20, right: 20, left: 20),
+                          const EdgeInsets.only(top: 30, right: 20, left: 20),
                       child: Text(
                         'Cloud Demand in \n Indonesia is Predicted to Continue to Increase',
                         style: GoogleFonts.poppins(
-                            color: Colors.black, fontSize: 24),
+                            color: Colors.white, fontSize: 17,fontWeight: FontWeight.bold,letterSpacing: 1.3),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Container(
-                      height: 100,
+                      height: 113,
                       padding: const EdgeInsets.symmetric(
                           vertical: 20, horizontal: 20),
                       child: Text(row2,
                           style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontSize: 17,
+                              color: Colors.white,
+                              fontSize: 15,
                               height: 1.2,
                               letterSpacing: 1.2),
                           textAlign: TextAlign.center),
@@ -146,9 +146,9 @@ class _Home7_newsState extends State<Home7_news> {
                         child: const Text(
                           'READ MORE',
                           style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 15,
                               decoration: TextDecoration.underline,
-                              color: Colors.black),
+                              color: Colors.white),
                         ))
                   ],
                 ),
@@ -175,20 +175,20 @@ class _Home7_newsState extends State<Home7_news> {
                       height: 90,
                       width: screenSize.width * 0.24,
                       padding:
-                          const EdgeInsets.only(top: 20, right: 20, left: 20),
+                          const EdgeInsets.only(top:30, right: 20, left: 20),
                       child: Text('Advancing Indonesia’s clouds',
                           style: GoogleFonts.poppins(
-                              color: Colors.white, fontSize: 24),
+                              color: Colors.white, fontSize: 17,fontWeight: FontWeight.bold,letterSpacing: 1.3),
                           textAlign: TextAlign.center),
                     ),
                     Container(
-                      height: 100,
+                      height: 113,
                       padding: const EdgeInsets.symmetric(
                           vertical: 20, horizontal: 20),
                       child: Text(row3,
                           style: GoogleFonts.poppins(
                               color: Colors.white,
-                              fontSize: 17,
+                              fontSize: 15,
                               height: 1.2,
                               letterSpacing: 1.2),
                           textAlign: TextAlign.center),
@@ -202,7 +202,7 @@ class _Home7_newsState extends State<Home7_news> {
                         child: const Text(
                           'READ MORE',
                           style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 15,
                               decoration: TextDecoration.underline,
                               color: Colors.white),
                         ))
